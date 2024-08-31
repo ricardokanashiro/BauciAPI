@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  app:
+    build: .
+    command: npm run server
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/app
+  
+  db:
+    image: postgres
+    container_name: baucidb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: amorzitos
+      POSTGRES_PASSWORD: amorzinhalindona
+      POSTGRES_DB: baucidb
+
+  pgadmin: 
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"

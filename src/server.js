@@ -1,14 +1,9 @@
-import express from "express"
+import { app } from "./app.js"
 
-import { pool } from "./database/config.js"
-
-const app  = express()
-
-app.use(express.json())
-
-app.get("/", (req, res) => {
-   pool.query("create table produtos()")
-   res.send("Hello World")
-})
-
-app.listen(3000, () => console.log("Server listening on port 3000"))
+(() => {
+   try {
+      app.listen(3000, () => console.log("Server listening on port 3000"))
+   } catch (error) {
+      console.log("Error on start server: " + error)
+   }
+})()

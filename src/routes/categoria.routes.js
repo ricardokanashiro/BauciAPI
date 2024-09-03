@@ -12,5 +12,6 @@ const categoriaController = new CategoriaController(categoriaService)
 
 categoriaRouter.get("/", (req, res) => categoriaController.listAllCategories(req, res))
 categoriaRouter.post("/", (req, res) => categoriaController.createCategoria(req, res))
+categoriaRouter.put("/:id", (req, res) => categoriaController.editCategoria(req, res))
 
 export { categoriaRouter }

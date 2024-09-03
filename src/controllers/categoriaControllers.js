@@ -31,6 +31,23 @@ class CategoriaController {
       }
    }
 
+   async editCategoria(req, res) {
+
+      const { id } = req.params
+      const { nome } = req.body
+
+      try 
+      {
+         const updatedCategoria = await this.categoriaService.editCategoria({ id, nome })
+         res.status(200).json(updatedCategoria)
+      } 
+      catch (error)
+      {
+         res.status(500).json({ error: error.message })
+      }
+
+   }
+
 }
 
 export { CategoriaController }

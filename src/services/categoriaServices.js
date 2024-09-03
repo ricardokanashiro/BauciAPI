@@ -26,6 +26,26 @@ class CategoriaService {
       return await this.categoriaRepository.findAll()
    }
 
+   async editCategoria({ id, nome }) {
+
+      const existingCategoria = await this.categoriaRepository.findById(id)
+      const existingNome = await this.categoriaRepository.findByName(nome)
+
+      if(!existingCategoria) {
+         throw new Error("Essa categoria não existe!")
+      }
+
+      if(!nome || typeof nome !== "string") {
+         throw new Error("Nome inválido ao editar categoria!")
+      }
+
+      if(existingNome) {
+         throw new Error("Nome já existente de categoria!")
+      }
+
+      return await this.categoriaRepository.edit({nome, id})
+   }
+
 }
 
 export { CategoriaService }

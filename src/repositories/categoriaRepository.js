@@ -46,6 +46,40 @@ class CategoriaRepository {
          throw new Error("Erro ao listar todas as categorias: " + error.message)
       }
    }
+
+   async findById(id) {
+
+      const query = `select * from categorias where id = $1`
+
+      try 
+      {
+         const { rows } = await pool.query(query, [id])
+         return rows[0]
+      } 
+      catch (error)
+      {
+         throw new Error("Erro ao buscar categoria pelo id: " + error.message)
+      }
+   }
+
+   async edit({ nome, id }) {
+
+      const query = `update categorias set nome = $1 where ID = $2 returning *`
+
+      try 
+      {
+         const { rows } = await pool.query(query, [nome, id])
+         return rows[0]
+      } 
+      catch (error) 
+      {
+         throw new Error("Erro ao editar categoria: " + error.message)
+      }
+
+      
+      
+   }
+
 }
 
 export { CategoriaRepository }

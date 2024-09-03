@@ -18,6 +18,17 @@ class CategoriaRepository {
       }
       
    }
+
+   async findAll() {
+
+      const query = `select * from categorias`
+
+      try {
+         return await pool.query(query) 
+      } catch (error) {
+         throw new Error("Erro ao listar todas as categorias: " + error.message)
+      }
+   }
 }
 
 export { CategoriaRepository }

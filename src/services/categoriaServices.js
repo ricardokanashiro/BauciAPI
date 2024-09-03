@@ -17,6 +17,10 @@ class CategoriaService {
       return await this.categoriaRepository.createCategoria({nome, id})
    }
 
+   async listAllCategorias() {
+      return await this.categoriaRepository.findAll()
+   }
+
 }
 
 export { CategoriaService }

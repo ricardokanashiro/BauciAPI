@@ -18,6 +18,19 @@ class CategoriaController {
       }
    }
 
+   async listAllCategories(req, res) {
+
+      try 
+      {
+         const allCategorias = await this.categoriaService.listAllCategorias()
+         res.status(200).json(allCategorias)
+      } 
+      catch (error) 
+      {
+         res.status(500).json({ error: error.message })
+      }
+   }
+
 }
 
 export { CategoriaController }

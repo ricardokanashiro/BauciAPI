@@ -80,6 +80,19 @@ class CategoriaRepository {
       
    }
 
+   async delete(id) {
+
+      const query = `delete from categorias where ID = $1`
+
+      try 
+      {
+         await pool.query(query, [id])
+      } 
+      catch (error)
+      {
+         throw new Error("Erro ao deletar uma categoria: " + error.message)
+      }
+   }
 }
 
 export { CategoriaRepository }

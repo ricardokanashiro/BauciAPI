@@ -46,6 +46,17 @@ class CategoriaService {
       return await this.categoriaRepository.edit({nome, id})
    }
 
+   async deleteCategoria(id) {
+
+      const existingCategoria = await this.categoriaRepository.findById(id)
+
+      if(!existingCategoria) {
+         throw new Error("Categoria não existente!")
+      }
+
+      await this.categoriaRepository.delete(id)
+   }
+
 }
 
 export { CategoriaService }

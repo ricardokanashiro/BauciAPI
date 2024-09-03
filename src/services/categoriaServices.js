@@ -9,9 +9,14 @@ class CategoriaService {
    async createCategoria(nome) {
 
       const id = uuidv4().substring(0, 20)
+      const existingNome = await this.categoriaRepository.findByName(nome)
 
       if(!nome || typeof nome !== "string") {
          throw new Error("Nome inválido ao criar categoria!")
+      }
+
+      if(existingNome) {
+         throw new Error("Nome já existente de categoria!")
       }
 
       return await this.categoriaRepository.createCategoria({nome, id})

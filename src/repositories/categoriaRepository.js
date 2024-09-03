@@ -8,9 +8,9 @@ class CategoriaRepository {
 
       try 
       {
-         const newCategoria = await pool.query(query, [id, nome])
+         const { rows } = await pool.query(query, [id, nome])
 
-         return newCategoria
+         return rows[0]
       } 
       catch (error) 
       {
@@ -19,12 +19,29 @@ class CategoriaRepository {
       
    }
 
+   async findByName(nome) {
+
+      const query = `select * from categorias where nome = $1`
+
+      try 
+      {
+         const { rows } = await pool.query(query, [nome])
+         return rows[0]
+      } 
+      catch (error)
+      {
+         throw new Error("Erro ao selecionar categoria por nome: " + error.message)
+      }
+   }
+
    async findAll() {
 
       const query = `select * from categorias`
 
       try {
-         return await pool.query(query) 
+         const { rows } = await pool.query(query)
+         return rows
+
       } catch (error) {
          throw new Error("Erro ao listar todas as categorias: " + error.message)
       }

@@ -14,7 +14,7 @@ try {
          imagem bytea,
          nome varchar(30) not null,
          descricao text not null,
-         prazoMinino smallint not null,
+         prazoMinimo smallint not null,
          prazoMaximo smallint not null,
          produtoID varchar(20) not null,
          
@@ -33,8 +33,8 @@ try {
          constraint fk_categoriaID_usuario foreign key (categoriaID) references categorias (ID)
       )
    `)
+   .then(() => console.log("Tabelas criadas com sucesso"))
 
-   console.log("Tabelas criadas com sucesso")
 } catch (error) {
    console.log("Erro ao criar tabelas: " + error.message)
 }

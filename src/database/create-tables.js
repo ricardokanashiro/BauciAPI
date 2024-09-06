@@ -7,10 +7,10 @@ try {
          email varchar(50) not null,
          senha varchar(30) not null,
          nome varchar(40) not null,
-         ID varchar(20) not null
+         ID varchar(20) not null,
 
          primary key (ID)
-      )
+      );
 
       create table categorias (
          ID varchar(20) not null,
@@ -41,7 +41,7 @@ try {
    
          primary key (usuarioID),
          constraint fk_categoriaID_usuario foreign key (categoriaID) references categorias (ID)
-      )
+      );
    `)
    .then(() => console.log("Tabelas criadas com sucesso"))
 

@@ -35,7 +35,7 @@ try {
       create table usuarios (
          nome varchar(40) not null,
          login varchar(40) not null,
-         senha varchar(30) not null,
+         senha varchar(60) not null,
          categoriaID varchar(20) not null,
          usuarioID varchar(20) not null,
    

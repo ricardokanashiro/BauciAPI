@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
+import bcrypt from "bcrypt"
 
 class UsuarioServices {
 
@@ -9,7 +10,7 @@ class UsuarioServices {
 
    async createUsuario({
       login, senha, nome, categoriaID
-   }) 
+   })
    {
       const errorTemplate = "Erro no Service de criar usuário: "
       const usuarioID = uuidv4().substring(0, 20)
@@ -35,6 +36,8 @@ class UsuarioServices {
          throw new Error(errorTemplate + "Senha de usuário excede o limite de caracteres!")
       }
 
+      const senhaIncrypt = await bcrypt.hash(senha, 10)
+
       if(typeof nome !== "string" || nome.length === 0) {
          throw new Error(errorTemplate + "Senha de usuário inválido")
       }
@@ -44,7 +47,7 @@ class UsuarioServices {
       }
 
       const newUsuario = await this.usuarioRepository.create({
-         login, senha, nome, categoriaID, usuarioID
+         login, senhaIncrypt, nome, categoriaID, usuarioID
       })
 
       return newUsuario

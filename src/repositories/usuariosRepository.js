@@ -2,7 +2,7 @@ import { pool } from "../database/config.js"
 
 class UsuariosRepository {
 
-   async create({ login, senha, nome, categoriaID, usuarioID }) {
+   async create({ login, senhaIncrypt, nome, categoriaID, usuarioID }) {
 
       const query = `
          insert into usuarios 
@@ -13,7 +13,7 @@ class UsuariosRepository {
       `
 
       try {
-         const { rows } = await pool.query(query, [login, senha, nome, categoriaID, usuarioID])
+         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID, usuarioID])
 
          return rows
       }

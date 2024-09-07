@@ -1,10 +1,11 @@
-import { v4 as uuidv4 } from "uuid"
 import bcrypt from "bcryptjs"
 import "dotenv/config.js"
 
 import { pool } from "./config.js"
 
-const senhaEncrypt = bcrypt.hash(process.env.ADM_SENHA, 10)
+const salt = await bcrypt.genSalt(10)
+const senhaEncrypt = await bcrypt.hash(process.env.ADM_SENHA, salt)
+
 const login = process.env.ADM_LOGIN
 const email = process.env.ADM_EMAIL
 const nome = process.env.ADM_NOME

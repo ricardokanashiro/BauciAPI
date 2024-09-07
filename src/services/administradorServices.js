@@ -8,7 +8,7 @@ class AdministradorServices {
       this.administradorRepository = administradorRepository
    }
 
-   async validateByCredentials({ login, senha, email }) {
+   async validateByCredentials({ login, senha }) {
       
       if(typeof login !== "string" || login.length === 0) {
          throw new Error("Erro no Services: login do administrador inválido!")
@@ -18,12 +18,8 @@ class AdministradorServices {
          throw new Error("Erro no Services: senha do administrador inválido!")
       }
 
-      if(typeof email !== "string" || email.length === 0) {
-         throw new Error("Erro no Services: email do administrador inválido!")
-      }
-
       const adm = await this.administradorRepository
-         .findByCredentials({ login, email })
+         .findByCredentials({ login })
 
       if(!adm || !await bcrypt.compare(senha, adm.senha)) {
          throw new Error("Erro no Services: erro ao encontrar administrador!")

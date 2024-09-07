@@ -2,15 +2,15 @@ import { pool } from "../database/config.js"
 
 class AdministradorRepository {
 
-   async findByCredentials({ login, email }) {
+   async findByCredentials({ login }) {
 
       const query = `
-         select * from administradores where login = $1 and email = $2
+         select * from administradores where login = $1
       `
 
       try 
       {
-         const { rows } = await pool.query(query, [login, email])
+         const { rows } = await pool.query(query, [login])
          return rows[0]
       } 
       catch (error) 

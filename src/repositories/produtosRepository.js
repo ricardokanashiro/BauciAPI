@@ -4,21 +4,21 @@ class ProdutosRepository {
 
    async create({ 
       imagem, nome, descricao, prazoMinimo, 
-      prazoMaximo, id
+      prazoMaximo, id, categoriaID
    }) 
    {
       const query = `
          insert into produtos 
-            (imagem, nome, descricao, prazoMinimo, prazoMaximo, produtoID)
+            (imagem, nome, descricao, prazoMinimo, prazoMaximo, produtoID, categoriaID)
          values
-            ($1, $2, $3, $4, $5, $6)
+            ($1, $2, $3, $4, $5, $6, $7)
          returning *
       `
 
       try 
       {
          const { rows } = await pool.query(query, [
-            imagem, nome, descricao, prazoMinimo, prazoMaximo, id
+            imagem, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
          ])
 
          return rows

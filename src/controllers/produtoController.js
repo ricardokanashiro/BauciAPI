@@ -41,12 +41,12 @@ class ProdutoController {
    async edit(req, res) {
 
       const { id } = req.params
-      const { nome, descricao, prazoMinimo, prazoMaximo, imagem } = req.body
+      const { nome, descricao, prazoMinimo, prazoMaximo, imagem, categoriaID } = req.body
 
       try 
       {
          const editedProduto = await this.produtoService.editProduto({
-            id, nome, descricao, prazoMinimo, prazoMaximo, imagem
+            id, nome, descricao, prazoMinimo, prazoMaximo, imagem, categoriaID
          })
 
          return res.status(200).json(editedProduto)

@@ -69,7 +69,7 @@ class ProdutosService {
 
    async editProduto({
       imagem, nome, descricao, 
-      prazoMinimo, prazoMaximo, id
+      prazoMinimo, prazoMaximo, id, categoriaID
    }) 
    {
       const existingProduto = await this.produtosRespository.findByID(id)
@@ -101,7 +101,7 @@ class ProdutosService {
 
       const editedProduto = await this.produtosRespository.edit({
          imagem, nome, descricao, prazoMinimo,
-         prazoMaximo, id
+         prazoMaximo, id, categoriaID
       })
 
       return editedProduto

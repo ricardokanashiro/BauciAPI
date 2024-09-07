@@ -5,11 +5,10 @@ try {
       create table administradores (
          login varchar(30) not null,
          email varchar(50) not null,
-         senha varchar(30) not null,
+         senha varchar(60) not null,
          nome varchar(40) not null,
-         ID varchar(20) not null,
 
-         primary key (ID)
+         primary key (email, login)
       );
 
       create table categorias (
@@ -37,9 +36,8 @@ try {
          login varchar(40) not null,
          senha varchar(60) not null,
          categoriaID varchar(20) not null,
-         usuarioID varchar(20) not null,
    
-         primary key (usuarioID),
+         primary key (login),
          constraint fk_categoriaID_usuario foreign key (categoriaID) references categorias (ID)
       );
    `)

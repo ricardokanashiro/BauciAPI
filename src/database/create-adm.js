@@ -1,17 +1,22 @@
 import { v4 as uuidv4 } from "uuid"
+import bcrypt from "bcryptjs"
+import "dotenv/config.js"
 
 import { pool } from "./config.js"
 
-const id = uuidv4().substring(0, 20)
+const senhaEncrypt = bcrypt.hash(process.env.ADM_SENHA, 10)
+const login = process.env.ADM_LOGIN
+const email = process.env.ADM_EMAIL
+const nome = process.env.ADM_NOME
 
 try 
 {
    await pool.query(`
       insert into administradores
-         (login, email, senha, nome, ID)
+         (login, email, senha, nome)
       values
-       ('administrador@exemplo', 'email@exemplo.com', 'senha123', 'RicardaoDoZap', $1)
-   `, [id])
+       ($1, $2, $3, $4)
+   `, [login, email, senhaEncrypt, nome])
    .then(() => console.log("Administrador criado com sucesso!"))
 } 
 catch (error) 

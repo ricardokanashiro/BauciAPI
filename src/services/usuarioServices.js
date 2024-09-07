@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 class UsuarioServices {
 
@@ -13,7 +13,6 @@ class UsuarioServices {
    })
    {
       const errorTemplate = "Erro no Service de criar usuário: "
-      const usuarioID = uuidv4().substring(0, 20)
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
 
       if(existingCategoria === 0) {
@@ -47,7 +46,7 @@ class UsuarioServices {
       }
 
       const newUsuario = await this.usuarioRepository.create({
-         login, senhaIncrypt, nome, categoriaID, usuarioID
+         login, senhaIncrypt, nome, categoriaID
       })
 
       return newUsuario

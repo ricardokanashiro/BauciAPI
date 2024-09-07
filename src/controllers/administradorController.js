@@ -6,12 +6,12 @@ class AdministradorController {
 
    async validateAdministrador(req, res) {
 
-      const { login, senha } = req.body
+      const { login, senha, email } = req.body
 
       try 
       {
          const token = await this.administradorServices
-            .validateByCredentials({ login, senha })
+            .validateByCredentials({ login, senha, email })
             
          return res.status(200).json(token)
       } 

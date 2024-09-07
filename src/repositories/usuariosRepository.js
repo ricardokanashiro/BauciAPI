@@ -2,13 +2,13 @@ import { pool } from "../database/config.js"
 
 class UsuariosRepository {
 
-   async create({ login, senhaIncrypt, nome, categoriaID, usuarioID }) {
+   async create({ login, senhaIncrypt, nome, categoriaID }) {
 
       const query = `
          insert into usuarios 
-            (login, senha, nome, categoriaID, usuarioID)
+            (login, senha, nome, categoriaID)
          values 
-            ($1, $2, $3, $4, $5)
+            ($1, $2, $3, $4)
          returning *
       `
 

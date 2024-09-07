@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 import "dotenv/config.js"
 
 class AdministradorServices {
@@ -7,7 +8,7 @@ class AdministradorServices {
       this.administradorRepository = administradorRepository
    }
 
-   async validateByCredentials({ login, senha }) {
+   async validateByCredentials({ login, senha, email }) {
       
       if(typeof login !== "string" || login.length === 0) {
          throw new Error("Erro no Services: login do administrador inválido!")
@@ -17,11 +18,15 @@ class AdministradorServices {
          throw new Error("Erro no Services: senha do administrador inválido!")
       }
 
-      const admValidated = await this.administradorRepository
-         .validateByCredentials({ login, senha })
+      if(typeof email !== "string" || email.length === 0) {
+         throw new Error("Erro no Services: email do administrador inválido!")
+      }
 
-      if(!admValidated) {
-         throw new Error("Erro no Services: administrador inválido!")
+      const adm = await this.administradorRepository
+         .findByCredentials({ login, email })
+
+      if(!adm || !await bcrypt.compare(senha, adm.senha)) {
+         throw new Error("Erro no Services: erro ao encontrar administrador!")
       }
 
       const payload = {

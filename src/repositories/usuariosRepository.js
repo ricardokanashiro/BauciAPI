@@ -13,7 +13,7 @@ class UsuariosRepository {
       `
 
       try {
-         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID, usuarioID])
+         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID])
 
          return rows
       }

@@ -3,7 +3,7 @@ import { pool } from "../database/config.js"
 class ProdutosRepository {
 
    async create({ 
-      imagem, nome, descricao, prazoMinimo, 
+      imageBuffer, nome, descricao, prazoMinimo, 
       prazoMaximo, id, categoriaID
    }) 
    {
@@ -18,7 +18,7 @@ class ProdutosRepository {
       try 
       {
          const { rows } = await pool.query(query, [
-            imagem, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
+            imageBuffer, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
          ])
 
          return rows
@@ -76,7 +76,7 @@ class ProdutosRepository {
    }
 
    async edit({ 
-      imagem, nome, descricao, prazoMinimo, 
+      imageBuffer, nome, descricao, prazoMinimo, 
       prazoMaximo, id,
    }) 
    {
@@ -93,7 +93,7 @@ class ProdutosRepository {
       try 
       {
          const { rows } = await pool.query(query, [
-            imagem, nome, descricao, prazoMinimo, prazoMaximo, id
+            imageBuffer, nome, descricao, prazoMinimo, prazoMaximo, id
          ])
 
          return rows

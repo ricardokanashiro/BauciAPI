@@ -13,6 +13,7 @@ class ProdutosService {
    }) 
    {
       const id = uuidv4().substring(0, 20)
+      const imageBuffer = Buffer.from(imagem, "base64")
       const errorTemplate = "Falha ao criar produto: "
 
       const existingProduto = await this.produtosRespository.findByNome(nome)
@@ -47,7 +48,7 @@ class ProdutosService {
       }
 
       const newProduto = await this.produtosRespository.create({
-         imagem, nome, descricao, prazoMinimo,
+         imageBuffer, nome, descricao, prazoMinimo,
          prazoMaximo, categoriaID, id
       })
       
@@ -73,6 +74,7 @@ class ProdutosService {
    }) 
    {
       const existingProduto = await this.produtosRespository.findByID(id)
+      const imageBuffer = Buffer.from(imagem, "base64")
       const errorTemplate = "Erro ao editar um produto: "
 
       if(existingProduto.length === 0) {
@@ -100,7 +102,7 @@ class ProdutosService {
       }
 
       const editedProduto = await this.produtosRespository.edit({
-         imagem, nome, descricao, prazoMinimo,
+         imageBuffer, nome, descricao, prazoMinimo,
          prazoMaximo, id, categoriaID
       })
 

@@ -36,6 +36,7 @@ try {
          login varchar(40) not null,
          senha varchar(60) not null,
          categoriaID varchar(20) not null,
+         ID varchar(20) not null,
    
          primary key (login),
          constraint fk_categoriaID_usuario foreign key (categoriaID) references categorias (ID)

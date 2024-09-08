@@ -12,6 +12,7 @@ class UsuarioServices {
       login, senha, nome, categoriaID
    })
    {
+      const id = uuidv4().substring(0, 20)
       const errorTemplate = "Erro no Service de criar usuário: "
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
 
@@ -46,7 +47,7 @@ class UsuarioServices {
       }
 
       const newUsuario = await this.usuarioRepository.create({
-         login, senhaIncrypt, nome, categoriaID
+         login, senhaIncrypt, nome, categoriaID, id
       })
 
       return newUsuario
@@ -59,7 +60,7 @@ class UsuarioServices {
       return usuarios
    }
 
-   async editUsuario({ nome, login, senha }) {
+   async editUsuario({ nome, login, senha, id }) {
 
       const errorTemplate = "Erro no Services de editar o usuário: "
 
@@ -88,7 +89,7 @@ class UsuarioServices {
       }
 
       const editedUsuario = await this.usuarioRepository.edit({
-         nome, login, senha
+         nome, login, senhaEncrypt, id
       })
 
       return editedUsuario

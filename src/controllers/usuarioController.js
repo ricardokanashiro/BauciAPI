@@ -44,7 +44,7 @@ class UsuarioController {
       try 
       {
          const editedUsuario = await this.usuarioServices.editUsuario({
-            id, login, senha, nome
+            login, senha, nome, id
          })
 
          return res.status(200).json(editedUsuario)

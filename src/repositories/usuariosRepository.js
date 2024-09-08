@@ -68,7 +68,11 @@ class UsuariosRepository {
 
    async edit({ nome, login, senhaEncrypt, id }) {
 
-      const query = `update usuarios set nome = $1, login = $2, senha = $3 returning *`
+      const query = `
+         update usuarios 
+            set nome = $1, login = $2, senha = $3 
+            where id = $4 
+            returning *`
 
       try 
       {

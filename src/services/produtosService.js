@@ -111,7 +111,7 @@ class ProdutosService {
        
       const existingProduto = await this.produtosRespository.findByID(id)
 
-      if(!existingProduto) {
+      if(existingProduto.length === 0) {
          throw new Error("Erro ao deletar um produto: produto não existe!")
       }
 

@@ -80,6 +80,9 @@ class UsuarioServices {
          throw new Error(errorTemplate + "Senha de usuário excede o limite de caracteres!")
       }
 
+      const salts = await bcrypt.genSalt(10)
+      const senhaEncrypt = await bcrypt.hash(senha, salts)
+
       if(typeof nome !== "string" || nome.length === 0) {
          throw new Error(errorTemplate + "Senha de usuário inválido")
       }

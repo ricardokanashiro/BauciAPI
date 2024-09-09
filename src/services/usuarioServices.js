@@ -9,9 +9,14 @@ class UsuarioServices {
    }
 
    async createUsuario({
-      login, senha, nome, categoriaID
+      login, senha, nome, categoriaID, user
    })
    {
+      if(user.role !== "adm")
+      {
+         throw new Error("Erro no Services: operação não permitida!")
+      }
+
       const id = uuidv4().substring(0, 20)
       const errorTemplate = "Erro no Service de criar usuário: "
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
@@ -53,14 +58,24 @@ class UsuarioServices {
       return newUsuario
    }
 
-   async listAllUsuarios() {
+   async listAllUsuarios(user) {
+
+      if(user.role !== "adm")
+      {
+         throw new Error("Erro no Services: operação não permitida!")
+      }
 
       const usuarios = await this.usuarioRepository.listAll()
 
       return usuarios
    }
 
-   async editUsuario({ nome, login, senha, id }) {
+   async editUsuario({ nome, login, senha, id, user }) {
+
+      if(user.role !== "adm")
+      {
+         throw new Error("Erro no Services: operação não permitida!")
+      }
 
       const errorTemplate = "Erro no Services de editar o usuário: "
 
@@ -98,7 +113,12 @@ class UsuarioServices {
       return editedUsuario
    }
 
-   async deleteUsuario(id) {
+   async deleteUsuario({ id, user }) {
+
+      if(user.role !== "adm")
+      {
+         throw new Error("Erro no Services: operação não permitida!")
+      }
 
       const existingUsuario = await this.usuarioRepository.findById(id)
 
@@ -128,7 +148,7 @@ class UsuarioServices {
          throw new Error("Erro no Services: usuário não existe!")
       }
 
-      const payload = { login, senha, role: "user" }
+      const payload = { login, senha, role: "user", categoriaID: usuario.categoriaID }
       const options = { expiresIn: "30d" }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options)

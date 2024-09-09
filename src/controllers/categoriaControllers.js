@@ -5,11 +5,13 @@ class CategoriaController {
    }
 
    async createCategoria(req, res) {
+
       const { nome } = req.body
+      const { user } = req
 
       try
       {
-         const newCategoria = await this.categoriaService.createCategoria(nome)
+         const newCategoria = await this.categoriaService.createCategoria({ nome, user })
          res.status(200).json(newCategoria)
       }
       catch (err)
@@ -20,9 +22,11 @@ class CategoriaController {
 
    async listAllCategories(req, res) {
 
+      const { user } = req
+
       try 
       {
-         const allCategorias = await this.categoriaService.listAllCategorias()
+         const allCategorias = await this.categoriaService.listAllCategorias(user)
          res.status(200).json(allCategorias)
       } 
       catch (error) 
@@ -35,10 +39,11 @@ class CategoriaController {
 
       const { id } = req.params
       const { nome } = req.body
+      const { user } = req
 
       try 
       {
-         const updatedCategoria = await this.categoriaService.editCategoria({ id, nome })
+         const updatedCategoria = await this.categoriaService.editCategoria({ id, nome, user })
          res.status(200).json(updatedCategoria)
       } 
       catch (error)
@@ -51,10 +56,11 @@ class CategoriaController {
    async deleteCategoria(req, res) {
 
       const { id } = req.params
+      const { user } = req
 
       try 
       {
-         await this.categoriaService.deleteCategoria(id)
+         await this.categoriaService.deleteCategoria({ id, user })
          res.status(200).json({ success: "Categoria deletada" })
       } 
       catch (error) 

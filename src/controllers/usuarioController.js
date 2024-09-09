@@ -7,11 +7,12 @@ class UsuarioController {
    async create(req, res) {
 
       const { nome, login, senha, categoriaID } = req.body
+      const { user } = req
 
       try 
       {
          const newUsuario = await this.usuarioServices.createUsuario({
-            nome, login, senha, categoriaID
+            nome, login, senha, categoriaID, user
          })
 
          return res.status(200).json(newUsuario)
@@ -24,9 +25,11 @@ class UsuarioController {
 
    async listAll(req, res) {
 
+      const { user } = req
+
       try 
       {
-         const usuarios = await this.usuarioServices.listAllUsuarios()
+         const usuarios = await this.usuarioServices.listAllUsuarios(user)
          
          return res.status(200).json(usuarios)
       } 
@@ -40,11 +43,12 @@ class UsuarioController {
 
       const { id } = req.params
       const { login, senha, nome } = req.body
+      const { user } = req
 
       try 
       {
          const editedUsuario = await this.usuarioServices.editUsuario({
-            login, senha, nome, id
+            login, senha, nome, id, user
          })
 
          return res.status(200).json(editedUsuario)
@@ -58,10 +62,11 @@ class UsuarioController {
    async delete(req, res) {
 
       const { id } = req.params
+      const { user } = req
 
       try 
       {
-         await this.usuarioServices.deleteUsuario(id)
+         await this.usuarioServices.deleteUsuario({ id, user })
          return res.status(200).json({ success: "Usuário deletado com sucesso!" })   
       } 
       catch (error) 

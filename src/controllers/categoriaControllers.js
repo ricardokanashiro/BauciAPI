@@ -69,6 +69,22 @@ class CategoriaController {
       }
    }
 
+   async findCategoriaById(req, res) {
+
+      const { id } = req.params
+      const { user } = req
+
+      try 
+      {
+         const categoria = await this.categoriaService.findCategoriaById({ id, user })
+         return res.status(200).json(categoria)   
+      } 
+      catch (error) 
+      {
+         return res.status(500).json({ error: error.message })
+      }
+   }
+
 }
 
 export { CategoriaController }

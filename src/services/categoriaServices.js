@@ -78,6 +78,23 @@ class CategoriaService {
       await this.categoriaRepository.delete(id)
    }
 
+   async findCategoriaById({ id, user }) {
+
+      if(user.role !== "adm")
+      {
+         throw new Error("Erro no Services: operação não permitida")
+      }
+
+      if(typeof id !== "string" || id.length === 0)
+      {
+         throw new Error("Erro no Services: id inválido!")
+      }
+
+      const categoria = await this.categoriaRepository.findById(id)
+
+      return categoria
+   }
+
 }
 
 export { CategoriaService }

@@ -28,4 +28,8 @@ categoriaRouter.delete("/:id", authMiddleware, (req, res) =>
    categoriaController.deleteCategoria(req, res)
 )
 
+categoriaRouter.get("/:id", authMiddleware, (req, res) => 
+   categoriaController.findCategoriaById(req, res)
+)
+
 export { categoriaRouter }

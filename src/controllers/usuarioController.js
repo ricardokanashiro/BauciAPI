@@ -67,7 +67,22 @@ class UsuarioController {
       try 
       {
          await this.usuarioServices.deleteUsuario({ id, user })
-         return res.status(200).json({ success: "Usuário deletado com sucesso!" })   
+         return res.status(200).json({ success: "Usuário deletado com sucesso!" })
+      } 
+      catch (error) 
+      {
+         return res.status(500).json({ error: error.message })
+      }
+   }
+
+   async login(req, res) {
+
+      const { login, senha } = req.body
+
+      try 
+      {
+         const token = await this.usuarioServices.login({ login, senha })
+         return res.status(200).json({ token })
       } 
       catch (error) 
       {

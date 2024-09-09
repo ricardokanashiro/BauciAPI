@@ -14,7 +14,8 @@ function authMiddleware(req, res, next) {
 
    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
 
-      if(err) {
+      if(err) 
+      {
          return res.status(500).json({ error: err.message })
       }
 

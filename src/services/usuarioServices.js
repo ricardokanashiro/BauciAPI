@@ -108,6 +108,33 @@ class UsuarioServices {
 
       await this.usuarioRepository.delete(id)
    }
+
+   async login({ login, senha }) {
+
+      const usuario = await this.usuarioRepository.findByCredentials({ login, senha })
+
+      if(typeof login !== "string" || login.length === 0) 
+      {
+         throw new Error("Erro no Services: usuário inválido!")
+      }
+
+      if(typeof senha !== "string" || senha.length === 0) 
+      {
+         throw new Error("Erro no Services: senha inválida!")
+      }
+
+      if(usuario.length === 0) 
+      {
+         throw new Error("Erro no Services: usuário não existe!")
+      }
+
+      const payload = { login, senha, role: "user" }
+      const options = { expiresIn: "30d" }
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options)
+
+      return token
+   }
 }
 
 export { UsuarioServices }

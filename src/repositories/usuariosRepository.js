@@ -99,6 +99,21 @@ class UsuariosRepository {
          throw new Error("Erro ao deletar um usuário: " + error.message)
       }
    }
+
+   async findByCredentials({ login, senha }) {
+
+      const query = `select * from usuarios where login = $1 and senha = $2`
+
+      try 
+      {
+         const { rows } = await pool.query(query, [login, senha])
+         return rows[0]
+      } 
+      catch (error) 
+      {
+         throw new Error("Erro ao buscar usuário pelas credenciais: " + error.message)
+      }
+   }
 }
 
 export { UsuariosRepository }

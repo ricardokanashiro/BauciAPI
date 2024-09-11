@@ -18,6 +18,6 @@ usuarioRouter.get("/", authMiddleware, (req, res) => usuarioController.listAll(r
 usuarioRouter.post("/", authMiddleware, (req, res) => usuarioController.create(req, res))
 usuarioRouter.put("/:id", authMiddleware, (req, res) => usuarioController.edit(req, res))
 usuarioRouter.delete("/:id", authMiddleware, (req, res) => usuarioController.delete(req, res))
-usuarioController.post("/login", (req, res) => usuarioController.login(req, res))
+usuarioRouter.post("/login", (req, res) => usuarioController.login(req, res))
 
 export { usuarioRouter }

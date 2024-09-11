@@ -1,6 +1,7 @@
 import { Router } from "express"
 
 import { authMiddleware } from "../middlewares/authMiddleware.js"
+import upload from "../config/multer.js"
 
 import { ProdutosRepository } from "../repositories/produtosRepository.js"
 import { ProdutosService } from "../services/produtosService.js"
@@ -18,8 +19,16 @@ produtoRouter.get("/:categoriaID", authMiddleware, (req, res) =>
    produtoController.listByCategoriaID(req, res)
 )
 
-produtoRouter.post("/", authMiddleware, (req, res) => produtoController.create(req, res))
-produtoRouter.put("/:id", authMiddleware, (req, res) => produtoController.edit(req, res))
-produtoRouter.delete("/:id", authMiddleware, (req, res) => produtoController.delete(req, res))
+produtoRouter.post("/", authMiddleware, upload.single("image"), (req, res) =>
+    produtoController.create(req, res)
+)
+
+produtoRouter.put("/:id", authMiddleware, upload.single("image"), (req, res) => 
+   produtoController.edit(req, res)
+)
+
+produtoRouter.delete("/:id", authMiddleware, (req, res) => 
+   produtoController.delete(req, res)
+)
 
 export { produtoRouter }

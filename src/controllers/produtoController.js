@@ -8,11 +8,12 @@ class ProdutoController {
 
       const { nome, descricao, prazoMinimo, prazoMaximo, categoriaID } = req.body
       const { user } = req
+      const imagem = req.file.filename
 
       try 
       {
          const newProduto = await this.produtoService.createProduto({
-            nome, descricao, prazoMinimo, prazoMaximo, categoriaID, user
+            nome, descricao, prazoMinimo, prazoMaximo, categoriaID, user, imagem
          })
 
          return res.status(200).json(newProduto)
@@ -43,8 +44,9 @@ class ProdutoController {
    async edit(req, res) {
 
       const { id } = req.params
-      const { nome, descricao, prazoMinimo, prazoMaximo, imagem, categoriaID } = req.body
+      const { nome, descricao, prazoMinimo, prazoMaximo, categoriaID } = req.body
       const { user } = req
+      const imagem = req.file.filename
 
       try 
       {

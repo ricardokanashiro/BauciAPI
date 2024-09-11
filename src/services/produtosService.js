@@ -15,8 +15,7 @@ class ProdutosService {
          throw new Error("Erro no Services: operação não permitida!")
       }
 
-      const id = uuidv4().substring(0, 20)
-      const imageBuffer = Buffer.from(imagem, "base64")
+      const id = uuidv4().substring(0, 20)   
       const errorTemplate = "Falha ao criar produto: "
 
       const existingProduto = await this.produtosRespository.findByNome(nome)

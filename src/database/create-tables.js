@@ -20,7 +20,7 @@ try {
    
       create table produtos (
          categoriaID varchar(20) not null,
-         imagem bytea,
+         imagem varchar(150),
          nome varchar(30) not null,
          descricao text not null,
          prazoMinimo smallint not null,

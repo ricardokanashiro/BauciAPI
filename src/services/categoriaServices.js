@@ -29,7 +29,7 @@ class CategoriaService {
 
    async listAllCategorias(user) {
 
-      if(user.role !== "adm" || user.role !== "user")
+      if(user.role !== "adm" && user.role !== "user")
       {
          throw new Error("Erro no Services: operação não permitida!")
       }

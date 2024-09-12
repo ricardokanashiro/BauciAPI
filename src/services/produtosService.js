@@ -29,6 +29,10 @@ class ProdutosService {
          throw new Error(errorTemplate + "esse nome já existe!")
       }
 
+      if(typeof imagem !== "string" || imagem.length === 0) {
+         throw new Error(errorTemplate + "imagem inválida!")
+      }
+
       if (typeof nome !== "string" || nome.length <= 0) {
          throw new Error(errorTemplate + "nome inválido!")
       }
@@ -50,7 +54,7 @@ class ProdutosService {
       }
 
       const newProduto = await this.produtosRespository.create({
-         imageBuffer, nome, descricao, prazoMinimo,
+         imagem, nome, descricao, prazoMinimo,
          prazoMaximo, categoriaID, id
       })
 

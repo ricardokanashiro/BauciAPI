@@ -6,9 +6,12 @@ class ProdutoController {
 
    async create(req, res) {
 
-      const { nome, descricao, prazoMinimo, prazoMaximo, categoriaID } = req.body
+      const { nome, descricao, categoriaID } = req.body
       const { user } = req
-      const imagem = req.file.filename
+      const imagem = `http://${process.env.HOST}/uploads/${req.file.filename}`
+
+      const prazoMinimo = Number(req.body.prazoMinimo)
+      const prazoMaximo = Number(req.body.prazoMaximo)
 
       try 
       {

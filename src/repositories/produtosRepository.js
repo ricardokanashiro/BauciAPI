@@ -3,7 +3,7 @@ import { pool } from "../database/config.js"
 class ProdutosRepository {
 
    async create({ 
-      imageBuffer, nome, descricao, prazoMinimo, 
+      imagem, nome, descricao, prazoMinimo, 
       prazoMaximo, id, categoriaID
    }) 
    {
@@ -18,7 +18,7 @@ class ProdutosRepository {
       try 
       {
          const { rows } = await pool.query(query, [
-            imageBuffer, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
+            imagem, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
          ])
 
          return rows

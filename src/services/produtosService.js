@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from "uuid"
+import path from "path"
+import fs from "fs/promises"
 
 class ProdutosService {
 
@@ -133,6 +135,15 @@ class ProdutosService {
       if (existingProduto.length === 0) {
          throw new Error("Erro ao deletar um produto: produto não existe!")
       }
+
+      const imageName = existingProduto[0].imagem.split("/").at(-1)
+
+      await fs.unlink(path.join("/usr/app/uploads/", imageName), (err) => {
+
+         if(err){
+            throw new Error("Erro ao deletar a imagem: " + err.message)
+         }
+      })
 
       await this.produtosRespository.delete(id)
    }

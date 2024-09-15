@@ -87,7 +87,6 @@ class ProdutosService {
       }
 
       const existingProduto = await this.produtosRespository.findByID(id)
-      const imageBuffer = Buffer.from(imagem, "base64")
       const errorTemplate = "Erro ao editar um produto: "
 
       if (existingProduto.length === 0) {
@@ -115,7 +114,7 @@ class ProdutosService {
       }
 
       const editedProduto = await this.produtosRespository.edit({
-         imageBuffer, nome, descricao, prazoMinimo,
+         imagem, nome, descricao, prazoMinimo,
          prazoMaximo, id, categoriaID
       })
 

@@ -19,6 +19,7 @@ class ProdutosService {
 
       const id = uuidv4().substring(0, 20)   
       const errorTemplate = "Falha ao criar produto: "
+      const errors = []
 
       const existingProduto = await this.produtosRespository.findByNome(nome)
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
@@ -27,35 +28,49 @@ class ProdutosService {
       prazoMaximo = Number(prazoMaximo)
 
       if (!existingCategoria) {
-         throw new Error(errorTemplate + "categoria do produto não existe!")
+         errors.push(errorTemplate + "categoria do produto não existe!")
       }
 
       if (existingProduto.length !== 0) {
-         throw new Error(errorTemplate + "esse nome já existe!")
+         errors.push(errorTemplate + "esse nome já existe!")
       }
 
-      if(typeof imagem !== "string" || imagem.length === 0) {
-         throw new Error(errorTemplate + "imagem inválida!")
+      if(typeof imagem !== "string" || imagem.length === 0 || !imagem) {
+         errors.push(errorTemplate + "imagem inválida!")
       }
 
-      if (typeof nome !== "string" || nome.length <= 0) {
-         throw new Error(errorTemplate + "nome inválido!")
+      if (typeof nome !== "string" || nome.length <= 0 || !nome) {
+         errors.push(errorTemplate + "nome inválido!")
       }
 
-      if (descricao.length <= 0 || typeof descricao !== "string") {
-         throw new Error(errorTemplate + "descrição inválida!")
+      if (descricao.length <= 0 || typeof descricao !== "string" || !descricao) {
+         errors.push(errorTemplate + "descrição inválida!")
+      }
+
+      if (typeof prazoMinimo !== "number" || prazoMinimo <= 0 || !prazoMinimo) {
+         errors.push(errorTemplate + "prazo mínimo inválido!")
+      }
+
+      if (typeof prazoMaximo !== "number" || prazoMaximo <= 0 || !prazoMaximo) {
+         errors.push(errorTemplate + "prazo máximo inválido!")
       }
 
       if (prazoMinimo >= prazoMaximo) {
-         throw new Error(errorTemplate + "intervalo de prazos inválido!")
+         errors.push(errorTemplate + "intervalo de prazos inválido!")
       }
 
-      if (typeof prazoMinimo !== "number" || prazoMinimo <= 0) {
-         throw new Error(errorTemplate + "prazo mínimo inválido!")
-      }
+      if(errors.length > 0) 
+      {
+         const deletingImgName = imagem.split("/").at(-1)
 
-      if (typeof prazoMaximo !== "number" || prazoMaximo <= 0) {
-         throw new Error(errorTemplate + "prazo máximo inválido!")
+         await fs.unlink(path.join("/usr/app/uploads/", deletingImgName), (err) => {
+
+            if(err){
+               throw new Error("Erro ao deletar a imagem: " + err.message)
+            }
+         })
+
+         throw new Error(errors.join(" "))
       }
 
       const newProduto = await this.produtosRespository.create({
@@ -93,32 +108,47 @@ class ProdutosService {
 
       const existingProduto = await this.produtosRespository.findByID(id)
       const errorTemplate = "Erro ao editar um produto: "
+      const errors = []
 
       prazoMinimo = Number(prazoMinimo)
       prazoMaximo = Number(prazoMaximo)
 
       if (existingProduto.length === 0) {
-         throw new Error(errorTemplate + "produto não existe!")
+         errors.push(errorTemplate + "produto não existe!")
       }
 
-      if (typeof nome !== "string" || nome.length <= 0) {
-         throw new Error(errorTemplate + "nome inválido!")
+      if (typeof nome !== "string" || nome.length <= 0 || !nome) {
+         errors.push(errorTemplate + "nome inválido!")
       }
 
-      if (descricao.length <= 0 || typeof descricao !== "string") {
-         throw new Error(errorTemplate + "descrição inválida!")
+      if (descricao.length <= 0 || typeof descricao !== "string" || !descricao) {
+         errors.push(errorTemplate + "descrição inválida!")
+      }
+
+      if (typeof prazoMinimo !== "number" || prazoMinimo <= 0 || !prazoMinimo) {
+         errors.push(errorTemplate + "prazo mínimo inválido!")
+      }
+
+      if (typeof prazoMaximo !== "number" || prazoMaximo <= 0 || !prazoMaximo) {
+         errors.push(errorTemplate + "prazo máximo inválido!")
       }
 
       if (prazoMinimo >= prazoMaximo) {
-         throw new Error(errorTemplate + "intervalo de prazos inválido!")
+         errors.push(errorTemplate + "intervalo de prazos inválido!")
       }
 
-      if (typeof prazoMinimo !== "number" || prazoMinimo <= 0) {
-         throw new Error(errorTemplate + "prazo mínimo inválido!")
-      }
+      if(errors.length > 0) 
+      {
+         const deletingImgName = imagem[0].imagem.split("/").at(-1)
 
-      if (typeof prazoMaximo !== "number" || prazoMaximo <= 0) {
-         throw new Error(errorTemplate + "prazo máximo inválido!")
+         await fs.unlink(path.join("/usr/app/uploads/", deletingImgName), (err) => {
+
+            if(err){
+               throw new Error("Erro ao deletar a imagem: " + err.message)
+            }
+         })
+
+         throw new Error(errors.join(" "))
       }
 
       const imageName = existingProduto[0].imagem.split("/").at(-1)

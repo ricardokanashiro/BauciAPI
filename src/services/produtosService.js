@@ -23,6 +23,9 @@ class ProdutosService {
       const existingProduto = await this.produtosRespository.findByNome(nome)
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
 
+      prazoMinimo = Number(prazoMinimo)
+      prazoMaximo = Number(prazoMaximo)
+
       if (!existingCategoria) {
          throw new Error(errorTemplate + "categoria do produto não existe!")
       }
@@ -91,6 +94,9 @@ class ProdutosService {
       const existingProduto = await this.produtosRespository.findByID(id)
       const errorTemplate = "Erro ao editar um produto: "
 
+      prazoMinimo = Number(prazoMinimo)
+      prazoMaximo = Number(prazoMaximo)
+
       if (existingProduto.length === 0) {
          throw new Error(errorTemplate + "produto não existe!")
       }
@@ -114,6 +120,15 @@ class ProdutosService {
       if (typeof prazoMaximo !== "number" || prazoMaximo <= 0) {
          throw new Error(errorTemplate + "prazo máximo inválido!")
       }
+
+      const imageName = existingProduto[0].imagem.split("/").at(-1)
+
+      await fs.unlink(path.join("/usr/app/uploads/", imageName), (err) => {
+
+         if(err){
+            throw new Error("Erro ao deletar a imagem: " + err.message)
+         }
+      })
 
       const editedProduto = await this.produtosRespository.edit({
          imagem, nome, descricao, prazoMinimo,

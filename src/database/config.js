@@ -17,12 +17,12 @@ const pool = new Pool({
 
 pool.on("connect", () => console.log("Database connection successful"))
 
-const { rows: admAlreadyExists } = await pool.query("select * from administradores")
+const checkTableQuery = `select to_regclass($1)`
+const checkResult = await pool.query(checkTableQuery, ["administradores"])
 
-if(admAlreadyExists.length === 0) {
+if(checkResult.rows[0].to_regclass !== null) {
    await createTables(pool)
    await createAdmTable(pool)
 }
-
 
 export { pool }

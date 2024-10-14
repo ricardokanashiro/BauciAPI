@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon --legacy-watch src/server.js",
-    "config": "node src/database/create-tables.js && node src/database/create-adm.js && mkdir uploads"
+    "server": "nodemon --legacy-watch src/server.js && mkdir uploads"
   },
   "keywords": [],
   "author": "",

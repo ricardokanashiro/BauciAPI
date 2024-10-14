@@ -181,6 +181,8 @@ class ProdutosService {
          throw new Error("Erro ao deletar um produto: produto não existe!")
       }
 
+      console.log(__dirname)
+
       const imageName = existingProduto[0].imagem.split("/").at(-1)
 
       await fs.unlink(path.join("/usr/app/uploads/", imageName), (err) => {

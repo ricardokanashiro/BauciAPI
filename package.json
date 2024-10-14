@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon --legacy-watch src/server.js && mkdir uploads"
+    "server": "node src/server.js"
   },
   "keywords": [],
   "author": "",

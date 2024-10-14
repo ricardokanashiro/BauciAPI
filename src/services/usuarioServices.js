@@ -162,7 +162,7 @@ class UsuarioServices {
 
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options)
 
-      return { token, login, nome: usuario.nome, categoria: categoria.nome }
+      return { token, login, nome: usuario.nome, categoria: categoria.nome, categoriaID: usuario.categoriaid }
    }
 
    async validateToken(token) {

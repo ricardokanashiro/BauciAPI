@@ -20,7 +20,7 @@ pool.on("connect", () => console.log("Database connection successful"))
 const checkTableQuery = `select to_regclass($1)`
 const checkResult = await pool.query(checkTableQuery, ["administradores"])
 
-if(checkResult.rows[0].to_regclass !== null) {
+if(checkResult.rows[0].to_regclass === null) {
    await createTables(pool)
    await createAdmTable(pool)
 }

@@ -81,8 +81,8 @@ class UsuarioController {
 
       try 
       {
-         const token = await this.usuarioServices.login({ login, senha })
-         return res.status(200).json({ token })
+         const loginData = await this.usuarioServices.login({ login, senha })
+         return res.status(200).json(loginData)
       } 
       catch (error) 
       {

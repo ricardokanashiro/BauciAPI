@@ -19,5 +19,6 @@ usuarioRouter.post("/", authMiddleware, (req, res) => usuarioController.create(r
 usuarioRouter.put("/:id", authMiddleware, (req, res) => usuarioController.edit(req, res))
 usuarioRouter.delete("/:id", authMiddleware, (req, res) => usuarioController.delete(req, res))
 usuarioRouter.post("/login", (req, res) => usuarioController.login(req, res))
+usuarioRouter.post("/validate", (req, res) => usuarioController.validateToken(req, res))
 
 export { usuarioRouter }

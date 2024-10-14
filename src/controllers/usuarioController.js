@@ -89,6 +89,21 @@ class UsuarioController {
          return res.status(500).json({ error: error.message })
       }
    }
+
+   async validateToken(req, res) {
+
+      const { token } = req.body
+
+      try 
+      {
+         await this.usuarioServices.validateToken(token)
+         return res.status(200).json({ success: "Token válido" })
+      } 
+      catch (error) 
+      {
+         return res.status(500).json({ error: "Token inválido: " + error.message })
+      }
+   }
 }
 
 export { UsuarioController }

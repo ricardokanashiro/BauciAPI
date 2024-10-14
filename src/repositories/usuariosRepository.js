@@ -100,13 +100,13 @@ class UsuariosRepository {
       }
    }
 
-   async findByCredentials({ login, senha }) {
+   async findByLogin(login) {
 
-      const query = `select * from usuarios where login = $1 and senha = $2`
+      const query = `select * from usuarios where login = $1`
 
       try 
       {
-         const { rows } = await pool.query(query, [login, senha])
+         const { rows } = await pool.query(query, [login])
          return rows[0]
       } 
       catch (error) 

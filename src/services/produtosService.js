@@ -83,7 +83,7 @@ class ProdutosService {
 
    async listProdutosByCategoriaID({ categoriaID, user }) {
 
-      if (user.role !== "adm") {
+      if (user.role !== "adm" && user.role !== "user") {
          throw new Error("Erro no Services: operação não permitida!")
       }
 

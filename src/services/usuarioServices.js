@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 class UsuarioServices {
 
@@ -131,30 +132,56 @@ class UsuarioServices {
 
    async login({ login, senha }) {
 
-      const usuario = await this.usuarioRepository.findByCredentials({ login, senha })
+      const usuario = await this.usuarioRepository.findByLogin(login)
+      const categoria = await this.categoriaRepository.findById(usuario.categoriaid)
 
-      if(typeof login !== "string" || login.length === 0) 
+      if(typeof login !== "string" || login.length === 0)
       {
          throw new Error("Erro no Services: usuário inválido!")
       }
 
-      if(typeof senha !== "string" || senha.length === 0) 
+      if(typeof senha !== "string" || senha.length === 0)
       {
          throw new Error("Erro no Services: senha inválida!")
       }
 
-      if(usuario.length === 0) 
+      if(!usuario || usuario.length === 0) 
       {
          throw new Error("Erro no Services: usuário não existe!")
       }
 
-      const payload = { login, senha, role: "user", categoriaID: usuario.categoriaID }
+      bcrypt.compare(senha, usuario.senha, (err, result) => {
+
+         if(err) throw new Error("Erro no Services: " + err.message)
+
+         if(!result) throw new Error("Usuário não existe!")
+      })
+
+      const payload = { role: "user", categoriaID: usuario.categoriaID }
       const options = { expiresIn: "30d" }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options)
 
-      return token
+      return { token, login, nome: usuario.nome, categoria: categoria.nome }
    }
+
+   async validateToken(token) {
+      
+      return new Promise((resolve, reject) => {
+
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+
+          if (err) {
+            return reject(new Error("Erro ao validar token: " + err.message));
+          }
+
+          resolve()
+
+        })
+
+      })
+    }
+    
 }
 
 export { UsuarioServices }

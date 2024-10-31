@@ -53,7 +53,7 @@ class UsuarioServices {
       }
 
       const newUsuario = await this.usuarioRepository.create({
-         login, senhaIncrypt, nome, categoriaID, id
+         login, senhaIncrypt, nome, categoriaID, id, categoria: existingCategoria.nome
       })
 
       return newUsuario

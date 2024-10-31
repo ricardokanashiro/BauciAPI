@@ -59,7 +59,7 @@ class ProdutosService {
          errors.push(errorTemplate + "intervalo de prazos inválido!")
       }
 
-      if(errors.length > 0) 
+      if(errors.length > 0)
       {
          const deletingImgName = imagem.split("/").at(-1)
 

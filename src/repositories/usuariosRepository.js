@@ -2,18 +2,18 @@ import { pool } from "../database/config.js"
 
 class UsuariosRepository {
 
-   async create({ login, senhaIncrypt, nome, categoriaID, id }) {
+   async create({ login, senhaIncrypt, nome, categoriaID, id, categoria }) {
 
       const query = `
          insert into usuarios 
-            (login, senha, nome, categoriaID, ID)
+            (login, senha, nome, categoriaID, ID, categoria)
          values 
-            ($1, $2, $3, $4, $5)
+            ($1, $2, $3, $4, $5, $6)
          returning *
       `
 
       try {
-         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID, id])
+         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID, id, categoria])
 
          return rows
       }

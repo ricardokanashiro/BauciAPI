@@ -1,14 +1,6 @@
 version: '3.7'
 
 services:
-
-  app:
-    build: .
-    command: npm run server
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/usr/app
   
   db:
     image: postgres
@@ -19,6 +11,14 @@ services:
       POSTGRES_USER: amorzitos
       POSTGRES_PASSWORD: amorzinhalindona
       POSTGRES_DB: baucidb
+
+  app:
+    build: .
+    command: npm run server
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/app
 
   pgadmin: 
     image: dpage/pgadmin4:latest

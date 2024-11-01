@@ -8,7 +8,7 @@ class AdministradorServices {
       this.administradorRepository = administradorRepository
    }
 
-   async validateByCredentials({ login, senha }) {
+   async login({ login, senha }) {
       
       if(typeof login !== "string" || login.length === 0) {
          throw new Error("Erro no Services: login do administrador inválido!")
@@ -26,18 +26,32 @@ class AdministradorServices {
       }
 
       const payload = {
-         login,
-         senha,
          role: "adm"
       }
 
       const options = {
-         expiresIn: "14d"
+         expiresIn: "30d"
       }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, options)
       
       return { token }
+   }
+
+   async validate(token) {
+
+      if(typeof token !== "string" || token.length === 0) {
+         throw new Error("Erro no Services: token do administrador inválido!")
+      }
+
+      try
+      {
+         jwt.verify(token, process.env.JWT_SECRET_KEY)
+      }
+      catch(err)
+      {
+         throw new Error("Erro no Services: " + err.message)
+      }
    }
 }
 

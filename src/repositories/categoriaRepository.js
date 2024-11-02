@@ -8,9 +8,7 @@ class CategoriaRepository {
 
       try 
       {
-         const { rows } = await pool.query(query, [id, nome])
-
-         return rows[0]
+         await pool.query(query, [id, nome])
       } 
       catch (error) 
       {
@@ -64,19 +62,16 @@ class CategoriaRepository {
 
    async edit({ nome, id }) {
 
-      const query = `update categorias set nome = $1 where ID = $2 returning *`
+      const query = `update categorias set nome = $1 where ID = $2`
 
       try 
       {
-         const { rows } = await pool.query(query, [nome, id])
-         return rows[0]
+         await pool.query(query, [nome, id])
       } 
       catch (error) 
       {
          throw new Error("Erro ao editar categoria: " + error.message)
       }
-
-      
       
    }
 

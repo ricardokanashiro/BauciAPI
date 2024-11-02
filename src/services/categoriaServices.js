@@ -24,7 +24,9 @@ class CategoriaService {
          throw new Error("Nome já existente de categoria!")
       }
 
-      return await this.categoriaRepository.createCategoria({nome, id})
+      await this.categoriaRepository.createCategoria({nome, id})
+
+      return await this.categoriaRepository.findAll()
    }
 
    async listAllCategorias(user) {
@@ -59,7 +61,9 @@ class CategoriaService {
          throw new Error("Nome já existente de categoria!")
       }
 
-      return await this.categoriaRepository.edit({nome, id})
+      await this.categoriaRepository.edit({nome, id})
+
+      return await this.categoriaRepository.findAll()
    }
 
    async deleteCategoria({ id, user }) {
@@ -76,6 +80,8 @@ class CategoriaService {
       }
 
       await this.categoriaRepository.delete(id)
+
+      return this.categoriaRepository.findAll()
    }
 
    async findCategoriaById({ id, user }) {

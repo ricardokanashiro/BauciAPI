@@ -60,8 +60,8 @@ class CategoriaController {
 
       try 
       {
-         await this.categoriaService.deleteCategoria({ id, user })
-         res.status(200).json({ success: "Categoria deletada" })
+         const response = await this.categoriaService.deleteCategoria({ id, user })
+         res.status(200).json(response)
       } 
       catch (error) 
       {

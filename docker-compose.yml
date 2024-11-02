@@ -19,6 +19,8 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/app
+    depends_on:
+      - db
 
   pgadmin: 
     image: dpage/pgadmin4:latest

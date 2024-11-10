@@ -96,6 +96,19 @@ class UsuariosRepository {
       }
    }
 
+   async deleteByCategoriaId(id) {
+
+      const query = `delete from usuarios where categoriaID = $1`
+
+      try 
+      {
+         await pool.query(query, [id])   
+      } 
+      catch (error) {
+         throw new Error("Erro ao deletar usuários: " + error.message)
+      }
+   }
+
    async findByLogin(login) {
 
       const query = `select * from usuarios where login = $1`

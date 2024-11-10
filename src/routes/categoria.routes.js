@@ -3,6 +3,7 @@ import { Router } from "express"
 import { authMiddleware } from "../middlewares/authMiddleware.js"
 
 import { ProdutosRepository } from "../repositories/produtosRepository.js"
+import { UsuariosRepository } from "../repositories/usuariosRepository.js"
 import { CategoriaRepository } from "../repositories/categoriaRepository.js"
 import { CategoriaService } from "../services/categoriaServices.js"
 import { CategoriaController } from "../controllers/categoriaControllers.js"
@@ -11,9 +12,10 @@ import { CategoriaController } from "../controllers/categoriaControllers.js"
 const categoriaRouter = Router()
 
 const produtoRepository = new ProdutosRepository()
+const usuarioRepository = new UsuariosRepository()
 
 const categoriaRepository = new CategoriaRepository()
-const categoriaService = new CategoriaService({ categoriaRepository, produtoRepository })
+const categoriaService = new CategoriaService({ categoriaRepository, produtoRepository, usuarioRepository })
 const categoriaController = new CategoriaController(categoriaService)
 
 

@@ -12,7 +12,7 @@ const pool = new Pool({
    user: process.env.POSTGRES_USER,
    password: process.env.POSTGRES_PASSWORD,
    database: process.env.POSTGRES_DB,
-   ssl: { rejectUnauthorized: false }
+   // ssl: { rejectUnauthorized: false }
 })
 
 pool.on("connect", () => console.log("Database connection successful"))

@@ -2,9 +2,10 @@ import { v4 as uuidv4 } from "uuid"
 
 class CategoriaService {
 
-      constructor({ categoriaRepository, produtoRepository }) {
+      constructor({ categoriaRepository, produtoRepository, usuarioRepository }) {
       this.categoriaRepository = categoriaRepository
       this.produtoRepoitory = produtoRepository
+      this.usuarioRepository = usuarioRepository
    }   
 
    async createCategoria({ nome, user }) {
@@ -81,6 +82,7 @@ class CategoriaService {
       }
 
       await this.produtoRepoitory.deleteByCategoriaID(id)
+      await this.usuarioRepository.deleteByCategoriaId(id)
       await this.categoriaRepository.delete(id)
 
       return this.categoriaRepository.findAll()

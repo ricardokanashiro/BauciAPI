@@ -13,6 +13,7 @@ class ProdutosService {
       imagem, nome, descricao, prazoMinimo,
       prazoMaximo, categoriaID, user
    }) {
+
       if (user.role !== "adm") {
          throw new Error("Erro no Services: operação não permitida!")
       }
@@ -73,12 +74,14 @@ class ProdutosService {
          throw new Error(errors.join(" "))
       }
 
-      const newProduto = await this.produtosRespository.create({
+      await this.produtosRespository.create({
          imagem, nome, descricao, prazoMinimo,
          prazoMaximo, categoriaID, id
       })
 
-      return newProduto
+      const produtos = await this.produtosRespository.findByCategoriaID(categoriaID)
+
+      return produtos
    }
 
    async listProdutosByCategoriaID({ categoriaID, user }) {
@@ -160,12 +163,14 @@ class ProdutosService {
          }
       })
 
-      const editedProduto = await this.produtosRespository.edit({
+      await this.produtosRespository.edit({
          imagem, nome, descricao, prazoMinimo,
          prazoMaximo, id, categoriaID
       })
 
-      return editedProduto
+      const produtos = await this.produtosRespository.findByCategoriaID(existingProduto[0].categoriaid)
+
+      return produtos
    }
 
    async deleteProduto({ user, id }) {
@@ -191,6 +196,10 @@ class ProdutosService {
       })
 
       await this.produtosRespository.delete(id)
+
+      const produtos = await this.produtosRespository.findByCategoriaID(existingProduto[0].categoriaid)
+
+      return produtos
    }
 }
 

@@ -17,11 +17,9 @@ class ProdutosRepository {
 
       try 
       {
-         const { rows } = await pool.query(query, [
+         await pool.query(query, [
             imagem, nome, descricao, prazoMinimo, prazoMaximo, id, categoriaID
          ])
-
-         return rows
       } 
       catch (error) 
       {
@@ -64,7 +62,7 @@ class ProdutosRepository {
 
       const query = `select * from produtos where produtoID = $1`
 
-      try 
+      try
       {
          const { rows } = await pool.query(query, [id])
          return rows
@@ -87,16 +85,13 @@ class ProdutosRepository {
             prazoMinimo = $4, prazoMaximo = $5
          where
             produtoID = $6
-         returning *
       `
 
       try 
       {
-         const { rows } = await pool.query(query, [
+         await pool.query(query, [
             imageBuffer, nome, descricao, prazoMinimo, prazoMaximo, id
          ])
-
-         return rows
       } 
       catch (error) 
       {
@@ -115,6 +110,20 @@ class ProdutosRepository {
       catch (error) 
       {
          throw new Error("Erro ao deletar um produto: " + error.message)
+      }
+   }
+
+   async deleteByCategoriaID(id) {
+      
+      const query = `delete from produtos where categoriaID = $1`
+
+      try 
+      {
+         await pool.query(query, [id])
+      } 
+      catch (error) 
+      {
+         throw new Error("Erro ao deletar produtos: " + error.message)
       }
    }
 }

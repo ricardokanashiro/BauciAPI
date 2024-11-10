@@ -12,11 +12,11 @@ class ProdutoController {
 
       try 
       {
-         const newProduto = await this.produtoService.createProduto({
+         const produtos = await this.produtoService.createProduto({
             nome, descricao, prazoMinimo, prazoMaximo, categoriaID, user, imagem
          })
 
-         return res.status(200).json(newProduto)
+         return res.status(200).json(produtos)
       } 
       catch (error)
       {
@@ -50,11 +50,11 @@ class ProdutoController {
 
       try 
       {
-         const editedProduto = await this.produtoService.editProduto({
+         const produtos = await this.produtoService.editProduto({
             id, nome, descricao, prazoMinimo, prazoMaximo, imagem, categoriaID, user
          })
 
-         return res.status(200).json(editedProduto)
+         return res.status(200).json(produtos)
       } 
       catch (error) 
       {
@@ -69,9 +69,9 @@ class ProdutoController {
 
       try 
       {
-         await this.produtoService.deleteProduto({ id, user })
+         const produtos = await this.produtoService.deleteProduto({ id, user })
          
-         return res.status(200).json({ success: "produto excluído com sucesso!" })
+         return res.status(200).json(produtos)
       } 
       catch (error) 
       {

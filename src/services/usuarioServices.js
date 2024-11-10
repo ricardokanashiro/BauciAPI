@@ -52,11 +52,13 @@ class UsuarioServices {
          throw new Error(errorTemplate + "Nome de usuário excede o limite de caracteres!")
       }
 
-      const newUsuario = await this.usuarioRepository.create({
+      await this.usuarioRepository.create({
          login, senhaIncrypt, nome, categoriaID, id, categoria: existingCategoria.nome
       })
 
-      return newUsuario
+      const usuarios = await this.usuarioRepository.listAll()
+
+      return usuarios
    }
 
    async listAllUsuarios(user) {
@@ -107,11 +109,13 @@ class UsuarioServices {
          throw new Error(errorTemplate + "Nome de usuário excede o limite de caracteres!")
       }
 
-      const editedUsuario = await this.usuarioRepository.edit({
+      await this.usuarioRepository.edit({
          nome, login, senhaEncrypt, id
       })
 
-      return editedUsuario
+      const usuarios = await this.usuarioRepository.listAll()
+
+      return usuarios
    }
 
    async deleteUsuario({ id, user }) {
@@ -128,6 +132,10 @@ class UsuarioServices {
       }
 
       await this.usuarioRepository.delete(id)
+
+      const usuarios = await this.usuarioRepository.listAll()
+
+      return usuarios
    }
 
    async login({ login, senha }) {

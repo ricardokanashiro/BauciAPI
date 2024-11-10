@@ -11,13 +11,13 @@ class UsuarioController {
 
       try 
       {
-         const newUsuario = await this.usuarioServices.createUsuario({
+         const usuario = await this.usuarioServices.createUsuario({
             nome, login, senha, categoriaID, user
          })
 
-         return res.status(200).json(newUsuario)
+         return res.status(200).json(usuario)
       } 
-      catch (error) 
+      catch (error)
       {
          return res.status(500).json({ error: error.message })
       }
@@ -47,11 +47,11 @@ class UsuarioController {
 
       try 
       {
-         const editedUsuario = await this.usuarioServices.editUsuario({
+         const usuarios = await this.usuarioServices.editUsuario({
             login, senha, nome, id, user
          })
 
-         return res.status(200).json(editedUsuario)
+         return res.status(200).json(usuarios)
       } 
       catch (error) 
       {
@@ -66,8 +66,8 @@ class UsuarioController {
 
       try 
       {
-         await this.usuarioServices.deleteUsuario({ id, user })
-         return res.status(200).json({ success: "Usuário deletado com sucesso!" })
+         const usuarios = await this.usuarioServices.deleteUsuario({ id, user })
+         return res.status(200).json(usuarios)
       } 
       catch (error) 
       {

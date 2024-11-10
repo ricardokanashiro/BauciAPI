@@ -13,9 +13,7 @@ class UsuariosRepository {
       `
 
       try {
-         const { rows } = await pool.query(query, [login, senhaIncrypt, nome, categoriaID, id, categoria])
-
-         return rows
+         await pool.query(query, [login, senhaIncrypt, nome, categoriaID, id, categoria])
       }
       catch (error) {
          throw new Error("Erro ao criar um usuário: " + error.message)
@@ -71,14 +69,12 @@ class UsuariosRepository {
       const query = `
          update usuarios 
             set nome = $1, login = $2, senha = $3 
-            where id = $4 
-            returning *`
+            where id = $4
+      `
 
       try 
       {
-         const { rows } = await pool.query(query, [nome, login, senhaEncrypt, id])
-
-         return rows
+         await pool.query(query, [nome, login, senhaEncrypt, id])
       } 
       catch (error) 
       {

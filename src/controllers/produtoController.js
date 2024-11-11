@@ -46,7 +46,7 @@ class ProdutoController {
       const { id } = req.params
       const { nome, descricao, prazoMinimo, prazoMaximo, categoriaID } = req.body
       const { user } = req
-      const imagem = `${process.env.HOST}/${req.file.filename}`
+      const imagem = `${process.env.HOST}/uploads/${req.file.filename}`
 
       try 
       {

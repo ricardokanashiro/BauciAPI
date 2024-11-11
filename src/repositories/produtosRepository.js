@@ -74,7 +74,7 @@ class ProdutosRepository {
    }
 
    async edit({ 
-      imageBuffer, nome, descricao, prazoMinimo, 
+      imagem, nome, descricao, prazoMinimo, 
       prazoMaximo, id,
    }) 
    {
@@ -90,7 +90,7 @@ class ProdutosRepository {
       try 
       {
          await pool.query(query, [
-            imageBuffer, nome, descricao, prazoMinimo, prazoMaximo, id
+            imagem, nome, descricao, prazoMinimo, prazoMaximo, id
          ])
       } 
       catch (error) 

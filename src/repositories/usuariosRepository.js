@@ -64,17 +64,17 @@ class UsuariosRepository {
       }
    }
 
-   async edit({ nome, login, senhaEncrypt, id }) {
+   async edit({ nome, login, senhaEncrypt, id, categoriaId, categoriaNome }) {
 
       const query = `
          update usuarios 
-            set nome = $1, login = $2, senha = $3 
-            where id = $4
+            set nome = $1, login = $2, senha = $3, categoriaID = $4, categoria = $5
+            where id = $6
       `
 
       try 
       {
-         await pool.query(query, [nome, login, senhaEncrypt, id])
+         await pool.query(query, [nome, login, senhaEncrypt, categoriaId, categoriaNome, id])
       } 
       catch (error) 
       {

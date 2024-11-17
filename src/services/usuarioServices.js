@@ -73,7 +73,7 @@ class UsuarioServices {
       return usuarios
    }
 
-   async editUsuario({ nome, login, senha, id, user }) {
+   async editUsuario({ nome, login, senha, id, user, categoriaId }) {
 
       if(user.role !== "adm")
       {
@@ -81,6 +81,17 @@ class UsuarioServices {
       }
 
       const errorTemplate = "Erro no Services de editar o usuário: "
+
+      const existingUsuario = await this.usuarioRepository.findById(id) 
+      const existingCategoria = await this.categoriaRepository.findById(categoriaId)
+
+      if(!existingUsuario || existingUsuario.length < 1) {
+         throw new Error(errorTemplate + "usuario não existe!")
+      }
+
+      if(!existingCategoria || existingCategoria.length < 1) {
+         throw new Error(errorTemplate + "categoria não existe!")
+      }
 
       if(typeof login !== "string" || login.length === 0) {
          throw new Error(errorTemplate + "Login de usuário inválido!")
@@ -110,7 +121,7 @@ class UsuarioServices {
       }
 
       await this.usuarioRepository.edit({
-         nome, login, senhaEncrypt, id
+         nome, login, senhaEncrypt, id, categoriaId: existingCategoria.id, categoriaNome: existingCategoria.nome
       })
 
       const usuarios = await this.usuarioRepository.listAll()

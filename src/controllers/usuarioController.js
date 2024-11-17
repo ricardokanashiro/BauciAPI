@@ -42,13 +42,13 @@ class UsuarioController {
    async edit(req, res) {
 
       const { id } = req.params
-      const { login, senha, nome } = req.body
+      const { login, senha, nome, categoriaId } = req.body
       const { user } = req
 
       try 
       {
          const usuarios = await this.usuarioServices.editUsuario({
-            login, senha, nome, id, user
+            login, senha, nome, id, user, categoriaId
          })
 
          return res.status(200).json(usuarios)

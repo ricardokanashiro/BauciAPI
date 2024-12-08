@@ -97,11 +97,11 @@ class UsuarioController {
       try 
       {
          await this.usuarioServices.validateToken(token)
-         return res.status(200).json({ success: "Token válido" })
+         return res.status(200).json({ success: "Token válido!" })
       } 
       catch (error) 
       {
-         return res.status(500).json({ error: "Token inválido: " + error.message })
+         return res.status(500).json({ error: error.message })
       }
    }
 }

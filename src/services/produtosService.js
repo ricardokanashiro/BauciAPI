@@ -23,6 +23,8 @@ class ProdutosService {
       const errors = []
 
       const existingProduto = await this.produtosRespository.findByNome(nome)
+         .filter(produto => produto.categoriaid === categoriaID)
+
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
 
       prazoMinimo = Number(prazoMinimo)
@@ -32,7 +34,7 @@ class ProdutosService {
          errors.push(errorTemplate + "categoria do produto não existe!")
       }
 
-      if (existingProduto.length !== 0 && existingCategoria[0].categoriaid === categoriaID) {
+      if (existingProduto.length !== 0) {
          errors.push(errorTemplate + "esse nome já existe!")
       }
 
@@ -110,6 +112,10 @@ class ProdutosService {
       }
 
       const existingProduto = await this.produtosRespository.findByID(id)
+
+      const existingProdutoSameName = await this.produtosRespository.findByNome(nome)
+         .filter(produto => produto.categoriaid === categoriaID)
+
       const errorTemplate = "Erro ao editar um produto: "
       const errors = []
 
@@ -118,6 +124,10 @@ class ProdutosService {
 
       if (existingProduto.length === 0) {
          errors.push(errorTemplate + "produto não existe!")
+      }
+
+      if(existingProdutoSameName.length !== 0) {
+         errors.push(errorTemplate + "produto com esse nome já existe!")
       }
 
       if (typeof nome !== "string" || nome.length <= 0 || !nome) {

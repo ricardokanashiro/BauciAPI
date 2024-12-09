@@ -160,13 +160,12 @@ class UsuarioServices {
       if (!usuario || usuario.length === 0) {
          throw new Error("Erro no Services: usuário não existe!")
       }
+      
+      const passwordResult = await bcrypt.compare(senha, usuario.senha)
 
-      bcrypt.compare(senha, usuario.senha, (err, result) => {
-
-         if (err) throw new Error("Erro no Services: " + err.message)
-
-         if (!result) throw new Error("Usuário não existe!")
-      })
+      if(!passwordResult) {
+         throw new Error("Erro no Services: usuário não existe!")
+      }
 
       const payload = { role: "user", categoriaID: usuario.categoriaID, id: usuario.id }
       const options = { expiresIn: "30d" }

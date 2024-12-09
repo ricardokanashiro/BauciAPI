@@ -22,7 +22,9 @@ class ProdutosService {
       const errorTemplate = "Falha ao criar produto: "
       const errors = []
 
-      const existingProduto = await this.produtosRespository.findByNome(nome)
+      const existingProdutoSameName = await this.produtosRespository.findByNome(nome)
+
+      const existingProdutoSameCategoria = existingProdutoSameName
          .filter(produto => produto.categoriaid === categoriaID)
 
       const existingCategoria = await this.categoriaRepository.findById(categoriaID)
@@ -34,7 +36,7 @@ class ProdutosService {
          errors.push(errorTemplate + "categoria do produto não existe!")
       }
 
-      if (existingProduto.length !== 0) {
+      if (existingProdutoSameCategoria.length !== 0) {
          errors.push(errorTemplate + "esse nome já existe!")
       }
 
@@ -114,6 +116,7 @@ class ProdutosService {
       const existingProduto = await this.produtosRespository.findByID(id)
 
       const existingProdutoSameName = await this.produtosRespository.findByNome(nome)
+      const existingProdutoSameCategoria = existingProdutoSameName
          .filter(produto => produto.categoriaid === categoriaID)
 
       const errorTemplate = "Erro ao editar um produto: "
@@ -122,11 +125,11 @@ class ProdutosService {
       prazoMinimo = Number(prazoMinimo)
       prazoMaximo = Number(prazoMaximo)
 
-      if (existingProduto.length === 0) {
+      if (existingProdutoSameName.length === 0) {
          errors.push(errorTemplate + "produto não existe!")
       }
 
-      if(existingProdutoSameName.length !== 0) {
+      if(existingProdutoSameCategoria.length !== 0) {
          errors.push(errorTemplate + "produto com esse nome já existe!")
       }
 
@@ -178,7 +181,7 @@ class ProdutosService {
          prazoMaximo, id, categoriaID
       })
 
-      const produtos = await this.produtosRespository.findByCategoriaID(existingProduto[0].categoriaid)
+      const produtos = await this.produtosRespository.findByCategoriaID(categoriaID)
 
       return produtos
    }

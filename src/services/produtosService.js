@@ -32,7 +32,7 @@ class ProdutosService {
          errors.push(errorTemplate + "categoria do produto não existe!")
       }
 
-      if (existingProduto.length !== 0) {
+      if (existingProduto.length !== 0 && existingCategoria[0].categoriaid === categoriaID) {
          errors.push(errorTemplate + "esse nome já existe!")
       }
 
